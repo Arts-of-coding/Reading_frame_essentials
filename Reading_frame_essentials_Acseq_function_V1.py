@@ -8,121 +8,73 @@
 
 # In[1]:
 
+def Acseq4 (seqs):
 
-def Acseq (seqs):
+    # Importing nessesary libraries and specific functions
+    import pandas as pd
+    import re
+    from re import match
+    from pandas import DataFrame
     
     ### Set up for amino acids to codon convertion
     bases = ['T', 'C', 'A', 'G']
     codon = [a+b+c for a in bases for b in bases for c in bases]
     amino_acids = 'FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG'
     codon_table = dict(zip(codon, amino_acids))
-    
-    ### Creating empty lists for the dictionary
-    myprotein = []
+
+    ### Creating empty list for frames function
     mycodons = []
-    
-    ### Uncomment of code below is possible to see the codons and codon_table
-    #print(codon)
-    #print(codon_table)
 
     ### Making sure the input sequence is DNA
-    count_a = 0
-    count_c = 0
-    count_g = 0
-    count_t = 0
-    
-    for s in seqs:
-        total = sum(len(s) for s in seqs)
-        
     for x in range(0,len(seqs)):
          for y in range(0,len(seqs[x])):
-            if "a" == seqs [x][y]:
-                count_a = count_a + 1
-
-    for a in range(0,len(seqs)):
-        for b in range(0,len(seqs[a])):
-            if "c"== seqs [a][b]:
-                count_c = count_c + 1
-
-    for c in range(0,len(seqs)):
-        for d in range(0,len(seqs[c])):
-            if "g" == seqs [c][d]:
-                count_g = count_g + 1
-
-    for e in range(0,len(seqs)):
-        for f in range(0,len(seqs[e])):
-            if "t" == seqs [e][f]:
-                count_t = count_t + 1
-
-    ### formula
-    if total != count_a + count_c + count_g + count_t:
-        
-    ### can print the counts individually if you want to see them
-        #print (count_a) 
-        #print (count_c)
-        #print (count_g)
-        #print (count_t)
-        #print (total)
-        
-        
-        raise ValueError("List contains a RNA, non-DNA or typo in a sequence")
-    
+            if not match("^[actg]{1,}$", seqs[x][y],re.I):
+                raise ValueError("List contains a RNA, non-DNA or typo in a sequence")
+                
     ### Function runs if all sequences consist of DNA
     else:
-        
-    #Three nested functions for each of the codons in the reading frames 
-        def frame_1 (seqs):
-            codons = []
-            for i in range(0,len(seqs),3): #3 for the length
-            #print ("RF1 start base", i)       
-                codons.append(seqs[i:i+3])
-                #myDict["key2"].join(codons)
-            print (codons)
-            mycodons.append(codons)
-            
-        def frame_2 (seqs):
-            codons2 = []
-            for j in range(1,len(seqs),3): #3 for the length
-            #print ("RF2 start base",j) 
-                codons2.append(seqs[j:j+3])
-                #myDict["key4"].append(codons2)
-            print (codons2)
-            mycodons.append(codons2)
-            
-        def frame_3 (seqs):
-            codons3 = []
-            for k in range(2,len(seqs),3): #3 for the length
-            #print ("RF3 start base",k)    
-                codons3.append(seqs[k:k+3])
-                #myDict["key6"].append(codons3)
-            print (codons3)
-            mycodons.append(codons3)
-            
-    ### determining for each of the three reading frames the amino acids
-        for sequence in seqs:
-            if sequence.upper().count('T') >= 0 :
-                for frame in range(3):
-                    myDict = {} # Generating an empty dictionary
-                    print ("\n"+"Reading frame " + str(frame+1 ) + " " + "&" + " " + "Start begin  of sequence: " + sequence [0:30]) 
-                    protein = ''
-                    for position in range(frame, len(sequence), 3):
-                        triplet = sequence[position:position+3]
-                        amino_acid = codon_table.get(triplet.upper(),'')
-                        protein = protein+amino_acid
-                    print(protein)
-                    myprotein.append(protein)
-                    #print(myprotein) see the list myprotein growing in each loop
-                    
-                    if (frame == 0):
-                        frame_1(sequence)
-                    elif (frame == 1):
-                        frame_2(sequence)
-                    elif (frame == 2):
-                        frame_3(sequence)
-    ### Filling the dictionary with the aminoacids as keys and the sequences as values
-                    myDict = {key: value for key, value in zip(myprotein,mycodons)}
-        return myDict
 
+    ### Determining for each of the three reading frames the triplets/codons
+        def frames (seqs):
+                codons = [seqs[i:i+3] for i in range(0,len(seqs),3)]
+                mycodons.append(codons)
+                codons2 = [seqs[j:j+3] for j in range(1,len(seqs),3)]
+                mycodons.append(codons2)
+                codons3 = [seqs[k:k+3] for k in range(2,len(seqs),3)]
+                mycodons.append(codons3)
+                    
+        [frames (sequence) for sequence in seqs if sequence.upper().count('T') >= 0]
+    
+    ### Converting the codons to uppercase for conversion to amino acids using dictionary
+        triplet2 = [[string.upper() for string in sublist] for sublist in mycodons]
+        
+    ### Converting the triplets/codons to amino acids using the dictionary
+        def replace_matched_items(word_list, dictionary):
+            
+            ### Omitting single and di-nucleotides from the conversion
+            new_list = [[ele for ele in sub if ele != "T" if ele != "C" if ele != "A" 
+                         if ele != "G" if ele != "TC" if ele != "CT" if ele != "CA" 
+                         if ele != "AC" if ele != "TA" if ele != "AT" if ele != "CG" 
+                         if ele != "GC" if ele != "TG" if ele != "GT" if ele != "TT" 
+                         if ele != "TT" if ele != "CC" if ele != "AA" if ele != "GG"] for sub in word_list]
+            ### 
+            new_list = [[dictionary.get(item, item) for item in lst] for lst in new_list]
+            return new_list
+        
+        triplet2 = replace_matched_items(triplet2, codon_table)
+        myaa = [''.join(li) for li in triplet2]
+        
+        mySEQS = [[sequence for position in range(frame, len(sequence), 3)][0] for sequence in seqs for frame in range(3) if sequence.upper().count('T') >= 0]             
+        myframes = [[frame + 1 for position in range(frame, len(sequence), 3)][0] for sequence in seqs for frame in range(3) if sequence.upper().count('T') >= 0]
+
+    ### Generating readable names in the dataframe
+        Acseqdf = {'Sequence': mySEQS, 'Frame': myframes,'Amino_acids': myaa}
+        df = DataFrame(Acseqdf, columns = ['Amino_acids', 'Frame','Sequence'])
+
+    ### Generating the dictionary with sequences and corresponding codons          
+        myDict = {key: value for key, value in zip(myaa,mycodons)}
+
+        return myDict, df
 
 # In[2]:
 
