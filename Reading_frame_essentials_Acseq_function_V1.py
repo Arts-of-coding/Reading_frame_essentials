@@ -6,7 +6,7 @@
 # 
 # Converts DNA sequences into amino acids and the corresponding codon triplets in three reading frames. Generates a dictionary and a dataframe.
 
-# In[1]:
+# In[ ]:
 
 def Acseq4 (seqs):
 
@@ -76,7 +76,7 @@ def Acseq4 (seqs):
 
         return myDict, df
 
-# In[2]:
+# In[ ]:
 
 
 ### You can have your own list of sequences here
@@ -86,20 +86,8 @@ sequences = ['gatttcgggaattccggaattc','ccgccggaattcgaattc','attcgaccggaattcatgg'
 Acseq(sequences)
 
 
-# In[3]:
-
-
-# Generating a dictionary with the function
-
-new_dict = Acseq(sequences)[0]
-new_dict
-
-# Generating a dataframe from the reading frames and sequences
-new_df = Acseq4(sequences)[1]
-new_df
-
 # In[ ]:
 
-
-
-
+# Generating a dataframe from the reading frames and sequences
+new_df = Acseq4(sequences)
+new_df
