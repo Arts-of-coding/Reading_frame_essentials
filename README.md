@@ -3,3 +3,12 @@ Reading_frame_essentials contains code with functions used for determining amino
 
 Functions include: Acseq (see README)
 ![png](output_20_0.png)
+
+
+# Help and support
+The preferred way to get support is through the Github issues page.
+
+Reach out to me at one of the following places!
+
+GitHub
+mail@julianarts.nl
