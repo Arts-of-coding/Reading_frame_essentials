@@ -8,7 +8,7 @@
 
 # In[ ]:
 
-def Acseq4 (seqs):
+def Acseq (seqs):
 
     # Importing nessesary libraries and specific functions
     import pandas as pd
@@ -89,5 +89,5 @@ Acseq(sequences)
 # In[ ]:
 
 # Generating a dataframe from the reading frames and sequences
-new_df = Acseq4(sequences)
+new_df = Acseq(sequences)
 new_df
