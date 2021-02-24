@@ -30,11 +30,3 @@ df = Acseq (sequences)
 The dataframe can be if needed converted to an excel file:
 df.to_excel("df.xlsx")  
 
-# Help and support
-The preferred way to get support is through the Github issues page.
-
-Reach out to me at one of the following places!
-
-GitHub
-mail@julianarts.nl
-
