@@ -16,7 +16,7 @@ Read in fasta files for generating the table:
   from Bio import SeqIO
   seq_dict = {rec.id : rec.seq for rec in SeqIO.parse("myfile.fasta", "fasta")} # where myfile.fasta is your fasta file
 
-Or see example below
+Or see the example below for manual analysis of the .fasta files.
 ################################################################################################################################################################
 
 
