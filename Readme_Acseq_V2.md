@@ -18,6 +18,8 @@ Read in fasta files for generating the table:
 
 Or see example below
 ################################################################################################################################################################
+
+
 Importing Fasta files the right way for analysis with Acseq
 
 
